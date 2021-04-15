@@ -7,13 +7,13 @@ const {
   deleteTransaction
 } = require('../../controllers/transaction-controller');
 
-// /api/transactions
+// /api/transaction
 router
   .route('/')
   .get(getAllTransaction)
   .post(createTransaction);
 
-// /api/transactions/:id
+// /api/transaction/:id
 router
   .route('/:id')
   .get(getTransactionById)

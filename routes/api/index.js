@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const transactionRoutes = require('./transaction-routes');
 
-router.use('/transactions', transactionRoutes);
+router.use('/transaction', transactionRoutes);
 
 module.exports = router;
