@@ -1,16 +1,12 @@
 
 {
-      "name": "Food Event",
-      "short_name": "Foodies",
-      "description": "An app that allows you to view upcoming food events.",
-      "start_url": "../index.html",
-      "background_color": "#01579b",
-      "theme_color": "#ffffff",
-      "fingerprints": false,
-      "inject": false,
+      "name": "Budget Tracker",
+      "short_name": "BudgetTrack",
       "icons": [{
-        "src": path.resolve("assets/img/icons/icon-512x512.png"),
-        "sizes": [96, 128, 192, 256, 384, 512],
-        "destination": path.join("assets", "icons")
-      }]
+        "src": "public/icons/icon-512x512.png"
+      }],
+      "theme_color": "#ffffff",
+      "background_color": "#01579b",
+      "start_url": "./index.html",    
+      "display": false  
 }
