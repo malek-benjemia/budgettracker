@@ -6,27 +6,70 @@ const FILES_TO_CACHE = [
   "./manifest.json",
   "./css/styles.css",
   "./js/index.js",
-  "./js/idb.js"
+  "./js/idb.js",
+  "./icons/icon-72x72.png",
+  "./icons/icon-96x96.png",
+  "./icons/icon-128x128.png",
+  "./icons/icon-144x144.png",
+  "./icons/icon-152x152.png",
+  "./icons/icon-192x192.png",
+  "./icons/icon-384x384.png",
+  "./icons/icon-512x512.png"
 ];
 
 // Respond with cached resources
 self.addEventListener('fetch', function (e) {
-  console.log('fetch request : ' + e.request.url)
-  console.log(caches);
-  e.respondWith(
-    caches.match(e.request).then(function (request) {
-      if (request) { // if cache is available, respond with cache
-        console.log('responding with cache : ' + e.request.url)
-        return request
-      } else {       // if there are no cache, try fetching request
-        console.log('file is not cached, fetching : ' + e.request.url)
-        return fetch(e.request)
-      }
+  if (e.request.url=="http://localhost:3001/"){
+    const init = { 
+      method: 'GET',
+      mode: 'no-cors',
+      headers: new Headers({
+        'Content-Type': 'application/x-www-form-urlencoded'
+      })
+    };
+    const url = new URL("http://localhost:3001/index.html")
+    const newRequest = new Request(
+      url.toString(),
+      new Request(e.request, init),
+    )
 
-      // You can omit if/else for console.log & put one line below like this too.
-      // return request || fetch(e.request)
-    })
-  )
+    console.log('fetch request : ' + newRequest.url)
+    console.log(caches);
+    e.respondWith(
+      caches.match(newRequest).then(function (newRequest) {
+        if (newRequest) { // if cache is available, respond with cache
+          console.log('responding with cache : ' + newRequest.url)
+          return newRequest
+        } else {       // if there are no cache, try fetching request
+          console.log('file is not cached, fetching : ' + newRequest.url)
+          return fetch(newRequest)
+        }
+  
+        // You can omit if/else for console.log & put one line below like this too.
+        // return request || fetch(e.request)
+      })
+    )
+
+  }
+  else {
+        console.log('fetch request : ' + e.request.url)
+        e.respondWith(
+          caches.match(e.request).then(function (request) {
+            if (request) { // if cache is available, respond with cache
+              console.log('responding with cache : ' + e.request.url)
+              return request
+            } else {       // if there are no cache, try fetching request
+              console.log('file is not cached, fetching : ' + e.request.url)
+              return fetch(e.request)
+            }
+
+            // You can omit if/else for console.log & put one line below like this too.
+            // return request || fetch(e.request)
+          })
+        )
+  }
+
+
 })
 
 // Cache resources
