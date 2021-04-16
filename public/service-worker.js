@@ -51,6 +51,40 @@ self.addEventListener('fetch', function (e) {
     )
 
   }
+
+ else if (e.request.url=="https://powerful-peak-64523.herokuapp.com/"){
+    const init = { 
+      method: 'GET',
+      mode: 'no-cors',
+      headers: new Headers({
+        'Content-Type': 'application/x-www-form-urlencoded'
+      })
+    };
+    const url = new URL("https://powerful-peak-64523.herokuapp.com/index.html")
+    const newRequest = new Request(
+      url.toString(),
+      new Request(e.request, init),
+    )
+
+    console.log('fetch request : ' + newRequest.url)
+    console.log(caches);
+    e.respondWith(
+      caches.match(newRequest).then(function (newRequest) {
+        if (newRequest) { // if cache is available, respond with cache
+          console.log('responding with cache : ' + newRequest.url)
+          return newRequest
+        } else {       // if there are no cache, try fetching request
+          console.log('file is not cached, fetching : ' + newRequest.url)
+          return fetch(newRequest)
+        }
+  
+        // You can omit if/else for console.log & put one line below like this too.
+        // return request || fetch(e.request)
+      })
+    )
+
+  }
+
   else {
         console.log('fetch request : ' + e.request.url)
         e.respondWith(
